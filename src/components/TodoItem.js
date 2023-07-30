@@ -15,7 +15,15 @@ export const TodoItem = (props) => {
                         }`}
                     ></i>
                 </button>
-                <span className="ms-2">{props.item.text}</span>
+                <span
+                    className={`ms-2 ${
+                        props.item.isCompleted
+                            ? "text-decoration-line-through"
+                            : " "
+                    }`}
+                >
+                    {props.item.name}
+                </span>
             </div>
             <div>
                 <button className="btn btn-sm btn-danger">
