@@ -24,13 +24,11 @@ export const TodoList = (props) => {
                                             if (
                                                 itemupdate.isCompleted === false
                                             ) {
-                                                newItem.isCompleted = true;
-                                                return newItem;
+                                                return (newItem.isCompleted = true);
                                             } else if (
                                                 itemupdate.isCompleted === true
                                             ) {
-                                                newItem.isCompleted = false;
-                                                return newItem;
+                                                return (newItem.isCompleted = false);
                                             }
                                         } else {
                                             return itemupdate;
