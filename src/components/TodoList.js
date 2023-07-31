@@ -6,36 +6,72 @@ export const TodoList = (props) => {
     const [todos, setTodos] = useState([]);
     const [input, setInput] = useState("");
 
-    // const addButton = () => {
-    //     const newTodos = [...todos];
-    //     newTodos.push({
-    //         id: newTodos.length + 1,
-    //         name: input,
-    //     });
-    //     setTodos(newTodos);
-    //     setInput("");
-    // };
-
     return (
         <div className="card-body">
             <h3 className="card-title mb-3">My Todo List</h3>
             <ul className="list-group">
-                {/* {todos.map((item, index) => {
-                    return <TodoItem item={item} key={index} />;
-                })} */}
                 {todos.map((item, index) => (
                     <li
                         key={index}
                         className="list-group-item d-flex justify-content-between align-items-center"
                     >
                         <div>
-                            <button className="btn btn-sm btn-ligh">
-                                <i className="bi bi-square"></i>
+                            <button
+                                onClick={() => {
+                                    const newTodos = todos.map((itemupdate) => {
+                                        if (itemupdate.id === item.id) {
+                                            const newItem = { ...itemupdate };
+                                            if (
+                                                itemupdate.isCompleted === false
+                                            ) {
+                                                newItem.isCompleted = true;
+                                                return newItem;
+                                            } else if (
+                                                itemupdate.isCompleted === true
+                                            ) {
+                                                newItem.isCompleted = false;
+                                                return newItem;
+                                            }
+                                        } else {
+                                            return itemupdate;
+                                        }
+                                    });
+                                    setTodos(newTodos);
+                                }}
+                                className={`btn btn-sm ${
+                                    item.isCompleted
+                                        ? "btn-success"
+                                        : "btn-light"
+                                }`}
+                            >
+                                <i
+                                    className={`bi ${
+                                        item.isCompleted
+                                            ? "bi-check-square"
+                                            : "bi-square"
+                                    }`}
+                                ></i>
                             </button>
-                            <span className="ms-2">{item.text}</span>
+                            <span
+                                className={`ms-2 ${
+                                    item.isCompleted
+                                        ? "text-decoration-line-through"
+                                        : " "
+                                }`}
+                            >
+                                {item.text}
+                            </span>
                         </div>
                         <div>
-                            <button className="btn btn-sm btn-danger">
+                            <button
+                                onClick={() => {
+                                    const newTodos = todos.filter(
+                                        (itemTodos) => itemTodos.id !== item.id
+                                    );
+                                    setTodos(newTodos);
+                                }}
+                                className="btn btn-sm btn-danger"
+                            >
                                 <i className="bi bi-trash"></i>
                             </button>
                         </div>
@@ -46,12 +82,14 @@ export const TodoList = (props) => {
                 <form
                     onSubmit={(event) => {
                         event.preventDefault();
-                        const newTodos = [...todos];
-                        newTodos.push({
-                            id: newTodos.length + 1,
-                            text: input,
-                        });
-                        setTodos(newTodos);
+                        setTodos([
+                            ...todos,
+                            {
+                                id: Math.random(),
+                                text: input,
+                                isCompleted: false,
+                            },
+                        ]);
                         setInput("");
                     }}
                     className="d-flex justify-content-between align-items-center"
@@ -66,15 +104,11 @@ export const TodoList = (props) => {
                         }}
                         required
                     />
-                    <button
-                        // onClick={props.addButton}
-                        className="btn btn-primary btn-sm rounded ms-2"
-                    >
+                    <button className="btn btn-primary btn-sm rounded ms-2">
                         Add
                     </button>
                 </form>
             </div>
-            {/* <AddTodoForm addButton={addButton} /> */}
         </div>
     );
 };
